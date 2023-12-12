@@ -1,0 +1,3 @@
+C:/Users/ASUS/CLionProjects/flower-exchange/cmake-build-debug/CMakeFiles/flower_exchange.dir
+C:/Users/ASUS/CLionProjects/flower-exchange/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/ASUS/CLionProjects/flower-exchange/cmake-build-debug/CMakeFiles/rebuild_cache.dir
