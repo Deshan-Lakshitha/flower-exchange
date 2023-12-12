@@ -21,11 +21,7 @@ vector<Order> CSVReader::readCSV(const string &filename) {
     while (getline(file, line)) {
         Order order;
         parseOrder(line, order);
-        if (!order.getClientOrderId().empty()) {
-            orders.push_back(order);
-        } else {
-            cerr << "Error parsing line: " << line << endl;
-        }
+        orders.push_back(order);
     }
 
     file.close();
@@ -38,18 +34,17 @@ void CSVReader::parseOrder(const string &line, Order &order) {
     int side, quantity;
     double price;
 
-    if (getline(iss, clientOrderId, ',') &&
-        getline(iss, instrument, ',') &&
-        (iss >> side) &&
-        (iss.ignore(1, ',')) &&
-        (iss >> quantity) &&
-        (iss.ignore(1, ',')) &&
-        (iss >> price)) {
+    getline(iss, clientOrderId, ',');
+    getline(iss, instrument, ',');
+    (iss >> side);
+    (iss.ignore(1, ','));
+    (iss >> quantity);
+    (iss.ignore(1, ','));
+    (iss >> price);
 
-        order.setClientOrderId(clientOrderId);
-        order.setInstrument(instrument);
-        order.setSide(side);
-        order.setQuantity(quantity);
-        order.setPrice(price);
-    }
+    order.setClientOrderId(clientOrderId);
+    order.setInstrument(instrument);
+    order.setSide(side);
+    order.setQuantity(quantity);
+    order.setPrice(price);
 }

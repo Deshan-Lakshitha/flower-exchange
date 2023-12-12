@@ -15,7 +15,7 @@ using namespace std;
 
 class OrderValidator {
 public:
-    static bool validateOrder(vector<Order> &orders);
+    static void validateOrder(vector<Order> &orders);
 private:
     static const int MIN_QUANTITY = 10;
     static const int MAX_QUANTITY = 1000;
@@ -24,6 +24,8 @@ private:
         BUY = 1,
         SELL = 2
     };
+    // Define the valid flower types
+    std::string validFlowers[5];
 
     static bool validateClientOrderId(const string &clientOrderId);
 

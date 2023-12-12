@@ -23,4 +23,8 @@ void ExchangeApp::run(std::string filename) {
     cout << "Validating orders...\n" << endl;
     OrderValidator::validateOrder(orders);
 
+    // for loop
+    for (size_t i = 0; i < orders.size(); i++) {
+        cout << orders[i].getClientOrderId() << " " << orders[i].getInstrument() << " " << orders[i].getSide() << " " << orders[i].getQuantity() << " " << orders[i].getPrice() << " " << orders[i].getStatus() << " " << orders[i].getReason() << endl;
+    }
 }

@@ -6,15 +6,28 @@
 #include <iostream>
 
 
-bool OrderValidator::validateOrder(vector<Order> & orders) {
+void OrderValidator::validateOrder(vector<Order> & orders) {
     for (size_t i = 0; i < orders.size(); i++) {
-        if (validateClientOrderId(orders[i].getClientOrderId())) {
-            cout << "Valid client order id: " << orders[i].getClientOrderId() << endl;
+        if (!validateClientOrderId(orders[i].getClientOrderId())) {
+            orders[i].setStatus("Reject");
+            orders[i].setReason("Invalid client order id");
+        } else if (!validateInstrument(orders[i].getInstrument())) {
+            orders[i].setStatus("Reject");
+            orders[i].setReason("Invalid instrument");
+        } else if (!validateSide(orders[i].getSide())) {
+            orders[i].setStatus("Reject");
+            orders[i].setReason("Invalid side");
+        } else if (!validatePrice(orders[i].getPrice())) {
+            orders[i].setStatus("Reject");
+            orders[i].setReason("Invalid price");
+        } else if (!validateQuantity(orders[i].getQuantity())) {
+            orders[i].setStatus("Reject");
+            orders[i].setReason("Invalid quantity");
         } else {
-            cout << "Invalid client order id: " << endl;
+            orders[i].setStatus("Accepted");
+            orders[i].setReason("");
         }
     }
-    return true;
 }
 
 bool OrderValidator::validateClientOrderId(const string &clientOrderId) {
@@ -26,14 +39,13 @@ bool OrderValidator::validateClientOrderId(const string &clientOrderId) {
 }
 
 bool OrderValidator::validateInstrument(const string &instrument) {
-    // Check empty
-    if (instrument.empty()) {
+
+    // Check if the instrument is one of the specified types
+    if (instrument == "Rose" || instrument == "Lavender" || instrument == "Lotus" || instrument == "Tulip" || instrument == "Orchid") {
+        return true;
+    } else {
         return false;
     }
-    return true;
-
-//    // Check valid instrument
-//    return INSTRUMENTS.find(instrument) != INSTRUMENTS.end();
 }
 
 bool OrderValidator::validateSide(int side) {
@@ -42,8 +54,8 @@ bool OrderValidator::validateSide(int side) {
 }
 
 bool OrderValidator::validatePrice(double price) {
-    // Check price greater than 0
-    return price > 0;
+    // Check price greater than 0.1
+    return price > 0.1; // check why blank space is have a small value
 }
 
 bool OrderValidator::validateQuantity(int quantity) {

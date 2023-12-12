@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-    string filename = R"(C:\Users\ASUS\CLionProjects\flower-exchange\input\example_1.csv)";
+    string filename = R"(..\input\example_1.csv)";
     ExchangeApp::run(filename);
 
     return 0;

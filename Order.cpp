@@ -34,6 +34,14 @@ int Order::getQuantity() const {
     return quantity;
 }
 
+string Order::getStatus() const {
+    return status;
+}
+
+string Order::getReason() const {
+    return reason;
+}
+
 void Order::setClientOrderId(const string &clientOrderId) {
     Order::clientOrderId = clientOrderId;
 }
@@ -52,4 +60,12 @@ void Order::setPrice(double price) {
 
 void Order::setQuantity(int quantity) {
     Order::quantity = quantity;
+}
+
+void Order::setStatus(const string &status) {
+    Order::status = status;
+}
+
+void Order::setReason(const string &reason) {
+    Order::reason = reason;
 }
