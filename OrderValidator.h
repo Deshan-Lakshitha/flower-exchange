@@ -6,6 +6,7 @@
 #define FLOWER_EXCHANGE_ORDERVALIDATOR_H
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -13,10 +14,12 @@ using namespace std;
 #include <set>
 
 class OrderValidator {
+public:
+    static bool validateOrder(vector<Order> &orders);
 private:
     static const int MIN_QUANTITY = 10;
     static const int MAX_QUANTITY = 1000;
-    static const std::set<std::string> INSTRUMENTS;
+//    static const std::set<std::string> INSTRUMENTS;
     enum SIDE {
         BUY = 1,
         SELL = 2
@@ -31,17 +34,6 @@ private:
     static bool validatePrice(double price);
 
     static bool validateQuantity(int quantity);
-
-public:
-    static bool validateOrder(Order &order);
-};
-
-const std::set<std::string> OrderValidator::INSTRUMENTS = {
-        "Rose",
-        "Lavender",
-        "Lotus",
-        "Tulip",
-        "Orchid"
 };
 
 

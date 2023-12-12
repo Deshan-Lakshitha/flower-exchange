@@ -3,11 +3,13 @@
 //
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 #include "ExchangeApp.h"
 #include "CSVReader.h"
+#include "OrderValidator.h"
 
 void ExchangeApp::run(std::string filename) {
     cout << "Exchange App Started!\n" << endl;
@@ -19,6 +21,6 @@ void ExchangeApp::run(std::string filename) {
 
     // Validate orders
     cout << "Validating orders...\n" << endl;
-
+    OrderValidator::validateOrder(orders);
 
 }
