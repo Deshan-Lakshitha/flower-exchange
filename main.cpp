@@ -4,8 +4,10 @@ using namespace std;
 
 int main()
 {
-    string filename = R"(..\input\example_1.csv)";
-    ExchangeApp::run(filename);
+
+    string filename = R"(..\input\example_7.csv)";
+    string output = R"(..\output\example_7.csv)";
+    ExchangeApp::run(filename, output);
 
     return 0;
 }

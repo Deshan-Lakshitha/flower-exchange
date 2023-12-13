@@ -12,4 +12,8 @@ add_executable(flower_exchange main.cpp
         ExchangeApp.h
         OrderValidator.cpp
         OrderValidator.h
+        OrderBook.cpp
+        OrderBook.h
+        ExecutionReport.cpp
+        ExecutionReport.h
 )

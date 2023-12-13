@@ -1,0 +1,13 @@
+ClientOrderId, OrderId, Instrument, Side, Price, Quantity, ExecStatus, Reason,TransactionTime
+aa13,ord1,Rose,1,55,100,New,,20231214-001012.627
+aa14,ord2,Rose,1,55,50,New,,20231214-001012.628
+aa15,ord3,Rose,0,3.55032e-312,1225893435,Reject,Invalid side,
+aa16,ord4,Rose,1,65,100,New,,20231214-001012.629
+aa17,ord5,Rose,2,65,100,PFill,,20231214-001012.629
+aa16,ord4,Rose,1,65,100,Fill,,20231214-001012.629
+aa17,ord5,Rose,2,55,100,PFill,,20231214-001012.629
+aa13,ord1,Rose,1,55,100,Fill,,20231214-001012.629
+aa17,ord5,Rose,2,55,50,PFill,,20231214-001012.629
+aa14,ord2,Rose,1,55,50,Fill,,20231214-001012.629
+aa18,ord6,Rose,1,1,50,PFill,,20231214-001012.629
+aa17,ord5,Rose,2,1,50,Fill,,20231214-001012.629

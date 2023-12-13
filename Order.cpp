@@ -42,6 +42,18 @@ string Order::getReason() const {
     return reason;
 }
 
+string Order::getExecStatus() const {
+    return execStatus;
+}
+
+string Order::getTransactionTime() const {
+    return transactionTime;
+}
+
+string Order::getOrderId() const {
+    return orderId;
+}
+
 void Order::setClientOrderId(const string &clientOrderId) {
     Order::clientOrderId = clientOrderId;
 }
@@ -68,4 +80,16 @@ void Order::setStatus(const string &status) {
 
 void Order::setReason(const string &reason) {
     Order::reason = reason;
+}
+
+void Order::setExecStatus(const string &execStatus) {
+    Order::execStatus = execStatus;
+}
+
+void Order::setTransactionTime(const string &transactionTime) {
+    Order::transactionTime = transactionTime;
+}
+
+void Order::setOrderId(const string &orderId) {
+    Order::orderId = orderId;
 }

@@ -19,6 +19,9 @@ private:
     int quantity;
     string status;
     string reason;
+    string execStatus;
+    string transactionTime;
+    string orderId;
 public:
     Order();    //    Default constructor
     Order(string &clientOrderId, string &instrument, int side, double price, int quantity);
@@ -30,6 +33,9 @@ public:
     int getQuantity() const;
     string getStatus() const;
     string getReason() const;
+    string getExecStatus() const;
+    string getTransactionTime() const;
+    string getOrderId() const;
 
     void setClientOrderId(const string &clientOrderId);
     void setInstrument(const string &instrument);
@@ -38,6 +44,9 @@ public:
     void setQuantity(int quantity);
     void setStatus(const string &status);
     void setReason(const string &reason);
+    void setExecStatus(const string &execStatus);
+    void setTransactionTime(const string &transactionTime);
+    void setOrderId(const string &orderId);
 };
 
 

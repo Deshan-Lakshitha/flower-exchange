@@ -14,6 +14,7 @@
 class CSVReader {
 public:
     static vector<Order> readCSV(const string &filename);
+    static void writeCSV(const string &filename, const vector<Order> &orders);
 
 private:
     static void parseOrder(const string &line, Order &order);

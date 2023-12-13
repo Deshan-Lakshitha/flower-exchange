@@ -10,7 +10,7 @@
 
 class ExchangeApp {
 public:
-    static void run(std::string filename);
+    static void run(std::string filename, std::string outputFilename);
 };
 
 
