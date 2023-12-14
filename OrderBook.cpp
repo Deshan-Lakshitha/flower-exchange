@@ -13,17 +13,10 @@ OrderBook::OrderBook(string &type) {
     type = type;
 }
 
-//// Custom comparator function for sorting based on price
-//bool compareOrderByPrice(const Order& a, const Order& b) {
-//    return a.getPrice() < b.getPrice();
-//}
-
 void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
-
     int side = order.getSide();
-    if (side == 1) { // buy side
-        cout << "Buy side" << endl;
-        if (sellOrders.empty()) {
+    if (side == 1) { //// BUY SIDE
+        if (sellOrders.empty()) {   // If there are no sell orders, add the order directly to buy side as a new order
             order.setExecStatus("New");
             buyOrders.push_back(order);
             order.setTransactionTime(getTimeStamp());
@@ -33,21 +26,22 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
             for (size_t i = 0; i < sellOrdersSize; i++) {
                 int buyPrice = order.getPrice();
                 int sellPrice = sellOrders[0].getPrice();
-                if (buyPrice < sellPrice) {
-                    if(i > 0){
+                if (buyPrice < sellPrice) { // If the buy price is less than the sell price, add the order to buy side
+                    if (i > 0){  // If the order is not a new one
                         buyOrders.push_back(order);
                         break;
                     }
+                    // If the order is a new one
                     order.setExecStatus("New");
                     buyOrders.push_back(order);
                     order.setTransactionTime(getTimeStamp());
                     executionReport.getExecutionReport().push_back(order);
                     break;
-                } else {
+                } else {    // When the buy price is greater than or equal to the sell price need to execute accordingly
                     int sellQuantity = sellOrders[0].getQuantity();
                     int buyQuantity = order.getQuantity();
                     int difference = buyQuantity - sellQuantity;
-                    if (difference == 0) {
+                    if (difference == 0) {  // Both orders are fully filled
                         sellOrders[0].setExecStatus("Fill");
                         order.setExecStatus("Fill");
                         order.setPrice(sellPrice);
@@ -58,7 +52,7 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
                         order.setPrice(buyPrice);
                         sellOrders.erase(sellOrders.begin());
                         break;
-                    } else if (difference < 0) {
+                    } else if (difference < 0) {   // The sell order is partially filled
                         sellOrders[0].setExecStatus("PFill");
                         order.setExecStatus("Fill");
                         order.setPrice(sellPrice);
@@ -70,7 +64,7 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
                         order.setPrice(buyPrice);
                         sellOrders[0].setQuantity(sellQuantity - buyQuantity);
                         break;
-                    } else {
+                    } else {    // The buy order is partially filled
                         sellOrders[0].setExecStatus("Fill");
                         order.setExecStatus("PFill");
                         order.setPrice(sellPrice);
@@ -85,15 +79,19 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
                     }
                 }
             }
+
+            // After iterating through all the sell orders, if the order is still partially filled, add it to buy side
             if(order.getExecStatus() == "PFill"){
                 buyOrders.push_back(order);
             }
         }
+
+        // After executing each order, sort the buy orders based on price
+        // Use descending order since we are in the buy side
         std::sort(buyOrders.begin(), buyOrders.end(), compareOrderByPriceDescending);
 
-    } else { // sell side
-        cout << "Sell side" << endl;
-        if (buyOrders.empty()) {
+    } else { //// SELL SIDE
+        if (buyOrders.empty()) {    // If there are no buy orders, add the order directly to sell side as a new order
             order.setExecStatus("New");
             sellOrders.push_back(order);
             order.setTransactionTime(getTimeStamp());
@@ -103,11 +101,12 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
             for (size_t i = 0; i < buyOrderSize; i++) {
                 int sellPrice = order.getPrice();
                 int buyPrice = buyOrders[0].getPrice();
-                if (sellPrice > buyPrice) {
-                    if(i>0){
+                if (sellPrice > buyPrice) { // If the sell price is greater than the buy price, add the order to sell side
+                    if (i > 0){    // If the order is not a new one
                         sellOrders.push_back(order);
                         break;
                     }
+                    // If the order is a new one
                     order.setExecStatus("New");
                     sellOrders.push_back(order);
                     order.setTransactionTime(getTimeStamp());
@@ -117,7 +116,7 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
                     int buyQuantity = buyOrders[0].getQuantity();
                     int sellQuantity = order.getQuantity();
                     int difference = sellQuantity - buyQuantity;
-                    if (difference == 0) {
+                    if (difference == 0) { // Both orders are fully filled
                         buyOrders[0].setExecStatus("Fill");
                         order.setExecStatus("Fill");
                         order.setPrice(buyPrice);
@@ -128,7 +127,7 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
                         order.setPrice(sellPrice);
                         buyOrders.erase(buyOrders.begin());
                         break;
-                    } else if (difference < 0) {
+                    } else if (difference < 0) {    // The buy order is partially filled
                         buyOrders[0].setExecStatus("PFill");
                         order.setExecStatus("Fill");
                         order.setPrice(buyPrice);
@@ -140,7 +139,7 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
                         order.setPrice(sellPrice);
                         buyOrders[0].setQuantity(buyQuantity - sellQuantity);
                         break;
-                    } else {
+                    } else {    // The sell order is partially filled
                         buyOrders[0].setExecStatus("Fill");
                         order.setExecStatus("PFill");
                         order.setPrice(buyPrice);
@@ -155,29 +154,36 @@ void OrderBook::addOrder(Order order, ExecutionReport &executionReport) {
                     }
                 }
             }
+
+            // After iterating through all the buy orders, if the order is still partially filled, add it to sell side
             if(order.getExecStatus() == "PFill"){
                 sellOrders.push_back(order);
             }
         }
-        // Use the sort function with a custom comparator for sorting based on price
+
+        // After executing each order, sort the sell orders based on price
+        // Use ascending order since we are in the sell side
         std::sort(sellOrders.begin(), sellOrders.end(), compareOrderByPriceAscending);
     }
 }
 
+// Custom comparator function for sorting based on price ascending
 bool OrderBook::compareOrderByPriceAscending(Order &a, Order &b) {
     return a.getPrice() < b.getPrice();
 }
 
+// Custom comparator function for sorting based on price descending
 bool OrderBook::compareOrderByPriceDescending(Order &a, Order &b) {
     return a.getPrice() > b.getPrice();
 }
 
+// Get the current time in the desired format
 string OrderBook::getTimeStamp() {
     // Get the current time
     auto now = std::chrono::system_clock::now();
     std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
 
-    // Format the time
+    // Format the time (without millisecond part)
     struct std::tm* timeInfo = std::localtime(&currentTime);
 
     // Create a string with the desired format

@@ -31,19 +31,25 @@ vector<Order> CSVReader::readCSV(const string &filename) {
 void CSVReader::parseOrder(const string &line, Order &order) {
     istringstream iss(line);
     string clientOrderId, instrument;
-    int side, quantity;
-    double price;
+    string sideStr, quantityStr, priceStr;
+    int side = -1, quantity = -1;
+    double price = 0.0;
 
     getline(iss, clientOrderId, ',');
     getline(iss, instrument, ',');
-    (iss >> side);
-    (iss.ignore(1, ','));
-    (iss >> quantity);
-    (iss.ignore(1, ','));
-    (iss >> price);
+    getline(iss, sideStr, ',');
+    getline(iss, quantityStr, ',');
+    getline(iss, priceStr, ',');
+//    (iss >> side);
+//    (iss.ignore(1, ','));
+//    (iss >> quantity);
+//    (iss.ignore(1, ','));
+//    (iss >> price);
 
-    cout << "quantity: " << quantity << endl;
-    cout << "price: " << price << endl;
+    if (!sideStr.empty()) side = stoi(sideStr);
+    if (!quantityStr.empty()) quantity = stoi(quantityStr);
+    if (!priceStr.empty()) price = stod(priceStr);
+
     order.setClientOrderId(clientOrderId);
     order.setInstrument(instrument);
     order.setSide(side);
@@ -61,15 +67,15 @@ void CSVReader::writeCSV(const string &filename, const vector<Order> &orders) {
     file << "ClientOrderId, OrderId, Instrument, Side, Price, Quantity, ExecStatus, Reason,TransactionTime" << endl;
     for (size_t i = 0; i < orders.size(); i++) {
         file
-        << orders[i].getClientOrderId() << ","
-        << orders[i].getOrderId() << ","
-        << orders[i].getInstrument() << ","
-        << orders[i].getSide() << ","
-        << orders[i].getPrice() << ","
-        << orders[i].getQuantity() << ","
-        << orders[i].getExecStatus() << ","
-        << orders[i].getReason() << ","
-        << orders[i].getTransactionTime() << endl;
+                << orders[i].getClientOrderId() << ","
+                << orders[i].getOrderId() << ","
+                << orders[i].getInstrument() << ","
+                << orders[i].getSide() << ","
+                << orders[i].getPrice() << ","
+                << orders[i].getQuantity() << ","
+                << orders[i].getExecStatus() << ","
+                << orders[i].getReason() << ","
+                << orders[i].getTransactionTime() << endl;
     }
 
     file.close();

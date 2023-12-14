@@ -14,7 +14,7 @@ using namespace std;
 #include "ExecutionReport.h"
 
 void ExchangeApp::run(std::string filename, std::string outputFilename) {
-    cout << "Exchange App Started!\n" << endl;
+    cout << "\n============Exchange App Started!============\n" << endl;
 
     // Read CSV file and create orders
     cout << "Reading CSV file...\n" << endl;
@@ -25,20 +25,19 @@ void ExchangeApp::run(std::string filename, std::string outputFilename) {
     cout << "Validating orders...\n" << endl;
     OrderValidator::validateOrder(orders);
 
+    // Create the execution report object
     ExecutionReport executionReport;
-//    vector<Order> report;
-//    executionReport.setExecutionReport(report);
 
+    // Create a separate order book for each instrument
     OrderBook roseOrderBook((string &) "Rose");
     OrderBook lavenderOrderBook((string &) "Lavender");
     OrderBook lotusOrderBook((string &) "Lotus");
     OrderBook tulipOrderBook((string &) "Tulip");
     OrderBook orchidOrderBook((string &) "Orchid");
 
-    // for loop
+    // Execute each order
     for (size_t i = 0; i < orders.size(); i++) {
-        // Using std::to_string
-        std::string strNumber = std::to_string(i+1);
+        std::string strNumber = std::to_string(i+1);    // Generate a unique order ID for each order
         orders[i].setOrderId("ord" + strNumber);
         if (orders[i].getStatus() == "Accepted"){
             std::string instrument = orders[i].getInstrument();
@@ -58,14 +57,18 @@ void ExchangeApp::run(std::string filename, std::string outputFilename) {
             executionReport.getExecutionReport().push_back(orders[i]);
         }
     }
-    cout << "Exection size exchange app :" << executionReport.getExecutionReport().size()<< endl;
+
+    cout << "Execution list size: " << executionReport.getExecutionReport().size() << "\n" << endl;
+    cout << "----------------- Execution List -----------------------" << endl;
     for (size_t i = 0; i < executionReport.getExecutionReport().size(); i++) {
-        cout << executionReport.getExecutionReport()[i].getOrderId() << " "<< executionReport.getExecutionReport()[i].getClientOrderId() << " " << executionReport.getExecutionReport()[i].getInstrument() << " " << executionReport.getExecutionReport()[i].getSide() << " " << executionReport.getExecutionReport()[i].getQuantity() << " " << executionReport.getExecutionReport()[i].getPrice() << " " << executionReport.getExecutionReport()[i].getExecStatus() << " " << executionReport.getExecutionReport()[i].getReason() << " " << executionReport.getExecutionReport()[i].getTransactionTime() << endl;
+        cout << executionReport.getExecutionReport()[i].getOrderId() << " "<< executionReport.getExecutionReport()[i].getClientOrderId() << " " << executionReport.getExecutionReport()[i].getInstrument() << " " << executionReport.getExecutionReport()[i].getSide() << " " << executionReport.getExecutionReport()[i].getExecStatus() << " " << executionReport.getExecutionReport()[i].getQuantity() << " " << executionReport.getExecutionReport()[i].getPrice() << " " << executionReport.getExecutionReport()[i].getReason() << " " << executionReport.getExecutionReport()[i].getTransactionTime() << endl;
     }
+    cout << "--------------------------------------------------------\n" << endl;
 
     // Write CSV file
-    cout << "Writing CSV file...\n" << endl;
+    cout << "Writing CSV file..." << endl;
     CSVReader::writeCSV(outputFilename, executionReport.getExecutionReport());
+    cout << "CSV file written successfully!\n" << endl;
 
-//        cout << orders[i].getClientOrderId() << " " << orders[i].getInstrument() << " " << orders[i].getSide() << " " << orders[i].getQuantity() << " " << orders[i].getPrice() << " " << orders[i].getStatus() << " " << orders[i].getReason() << endl;
+    cout << "============Exchange App Ended!============\n" << endl;
 }
