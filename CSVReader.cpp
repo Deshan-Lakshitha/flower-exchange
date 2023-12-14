@@ -40,11 +40,6 @@ void CSVReader::parseOrder(const string &line, Order &order) {
     getline(iss, sideStr, ',');
     getline(iss, quantityStr, ',');
     getline(iss, priceStr, ',');
-//    (iss >> side);
-//    (iss.ignore(1, ','));
-//    (iss >> quantity);
-//    (iss.ignore(1, ','));
-//    (iss >> price);
 
     if (!sideStr.empty()) side = stoi(sideStr);
     if (!quantityStr.empty()) quantity = stoi(quantityStr);
@@ -53,8 +48,11 @@ void CSVReader::parseOrder(const string &line, Order &order) {
     order.setClientOrderId(clientOrderId);
     order.setInstrument(instrument);
     order.setSide(side);
+    order.setSideStr(sideStr);
     order.setQuantity(quantity);
+    order.setQuantityStr(quantityStr);
     order.setPrice(price);
+    order.setPriceStr(priceStr);
 }
 
 void CSVReader::writeCSV(const string &filename, const vector<Order> &orders) {
@@ -70,9 +68,9 @@ void CSVReader::writeCSV(const string &filename, const vector<Order> &orders) {
                 << orders[i].getClientOrderId() << ","
                 << orders[i].getOrderId() << ","
                 << orders[i].getInstrument() << ","
-                << orders[i].getSide() << ","
-                << orders[i].getPrice() << ","
-                << orders[i].getQuantity() << ","
+                << ((orders[i].getExecStatus() == "Reject") ? orders[i].getSideStr() : to_string(orders[i].getSide())) << ","
+                << ((orders[i].getExecStatus() == "Reject") ? orders[i].getPriceStr() : to_string(orders[i].getPrice())) << ","
+                << ((orders[i].getExecStatus() == "Reject") ? orders[i].getQuantityStr() : to_string(orders[i].getQuantity())) << ","
                 << orders[i].getExecStatus() << ","
                 << orders[i].getReason() << ","
                 << orders[i].getTransactionTime() << endl;

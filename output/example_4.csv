@@ -1,5 +1,5 @@
 ClientOrderId, OrderId, Instrument, Side, Price, Quantity, ExecStatus, Reason,TransactionTime
-aa13,ord1,Rose,2,55,100,New,,20231214-093402.237
-aa14,ord2,Rose,2,45,100,New,,20231214-093402.238
-aa15,ord3,Rose,1,45,100,PFill,,20231214-093402.238
-aa14,ord2,Rose,2,45,100,Fill,,20231214-093402.238
+aa13,ord1,Rose,2,55.000000,100,New,,20231214-114814.389
+aa14,ord2,Rose,2,45.000000,100,New,,20231214-114814.390
+aa15,ord3,Rose,1,45.000000,100,PFill,,20231214-114814.390
+aa14,ord2,Rose,2,45.000000,100,Fill,,20231214-114814.390

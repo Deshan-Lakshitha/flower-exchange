@@ -54,6 +54,18 @@ string Order::getOrderId() const {
     return orderId;
 }
 
+string Order::getSideStr() const {
+    return sideStr;
+}
+
+string Order::getPriceStr() const {
+    return priceStr;
+}
+
+string Order::getQuantityStr() const {
+    return quantityStr;
+}
+
 void Order::setClientOrderId(const string &clientOrderId) {
     Order::clientOrderId = clientOrderId;
 }
@@ -92,4 +104,16 @@ void Order::setTransactionTime(const string &transactionTime) {
 
 void Order::setOrderId(const string &orderId) {
     Order::orderId = orderId;
+}
+
+void Order::setSideStr(const string &sideStr) {
+    Order::sideStr = sideStr;
+}
+
+void Order::setPriceStr(const string &priceStr) {
+    Order::priceStr = priceStr;
+}
+
+void Order::setQuantityStr(const string &quantityStr) {
+    Order::quantityStr = quantityStr;
 }

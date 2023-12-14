@@ -1,4 +1,4 @@
 ClientOrderId, OrderId, Instrument, Side, Price, Quantity, ExecStatus, Reason,TransactionTime
-aa13,ord1,Rose,2,55,100,New,,20231214-093300.249
-aa14,ord2,Rose,2,45,100,New,,20231214-093300.250
-aa15,ord3,Rose,1,35,100,New,,20231214-093300.250
+aa13,ord1,Rose,2,55.000000,100,New,,20231214-113826.539
+aa14,ord2,Rose,2,45.000000,100,New,,20231214-113826.539
+aa15,ord3,Rose,1,35.000000,100,New,,20231214-113826.539
